@@ -3,14 +3,7 @@
     margin:0;
     padding:0;
   }
-  body {
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background-color: #212121;
-    font-family:arial;
-  }
+
   .input-container {
     position: relative;
     margin: 50px auto;
@@ -107,4 +100,9 @@
           .input-container input[type="text"]:valid~.line {
     transform: scaleX(1);
     transition: 1s;
+  }
+
+  .navigation{
+    display: flex;
+    flex-direction: row;
   }
