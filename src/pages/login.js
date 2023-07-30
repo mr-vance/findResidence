@@ -1,7 +1,7 @@
 // login.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { auth, app } from '../firebaseConfig';
+import { app } from '../firebaseConfig';
 import { AuthErrorCodes, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import './signup-login.css';
 import { useNavigate } from 'react-router-dom';
