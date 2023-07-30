@@ -1,8 +1,8 @@
 // signup.js
 import React, { useState } from 'react';
-import {auth, app} from '../firebaseConfig';
+import {auth} from '../firebaseConfig';
 import './signup-login.css';
-import { AuthErrorCodes, createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { AuthErrorCodes, createUserWithEmailAndPassword} from "firebase/auth";
 
 
 const Signup = () => {
@@ -32,6 +32,7 @@ const Signup = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
+        alert("Signup successful!");
         console.log(userCredential.user);
         // ...
       })

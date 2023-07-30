@@ -54,28 +54,34 @@ import './home.css';
       {/* Navbar */}
       <nav>
         <div className="nav-container">
+
           <div className="username">
             {email}
-            <div className="logout-button" onClick={handleLogout}>
+          </div>
+
+          <div className="logout-button" onClick={handleLogout}>
               Logout
             </div>
-          </div>
-          <div className="search-container">
+        </div>
+
+        <div className="search-container">
+
             <input
               type="text"
               placeholder="Location"
               value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
+              onChange={(e) => setLocation(e.target.value)}/>
+
             <input
               type="text"
               placeholder="Budget"
               value={budget}
               onChange={(e) => setBudget(e.target.value)}
             />
+            
             <button onClick={handleSearch}>Search</button>
           </div>
-        </div>
+
       </nav>
 
       {/* Residences */}
