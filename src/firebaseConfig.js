@@ -1,10 +1,8 @@
 // firebaseConfig.js
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getDatabase } from "firebase/database"; // Don't forget to import getDatabase as well.
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyDp_-CvM1PnW_TxRfrvc1M6mG2Q25lolwQ",
   authDomain: "findres-app.firebaseapp.com",
@@ -17,8 +15,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-const auth = getAuth(app); // Update the auth export here
+export const app = initializeApp(firebaseConfig);
 
-export { app, database, auth }; // Export the necessary objects
+// Initialize Firebase Auth and get the 'auth' object
+const auth = getAuth(app);
+
+export { auth, createUserWithEmailAndPassword };

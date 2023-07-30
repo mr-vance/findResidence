@@ -1,26 +1,42 @@
 // login.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { auth } from '../firebaseConfig';
-import './signup-login.css'; // Import the custom CSS file
+import { auth, app } from '../firebaseConfig';
+import {  AuthErrorCodes, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import './signup-login.css'; 
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  // initialised auth instance
+  const auth = getAuth(app);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
-    try {
-      const userCredential = await auth.signInWithEmailAndPassword(email, password);
-      const user = userCredential.user;
-      console.log('User logged in:', user);
-      // You can add further logic here, such as redirecting to a dashboard page.
-    } catch (error) {
-      setError(error.message);
-    }
+    // sign in user
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        
+        console.log(userCredential.user);
+        // ...
+      })
+      .catch((err) => {
+        if (
+        err.code === AuthErrorCodes.INVALID_PASSWORD ||
+        err.code === AuthErrorCodes.USER_DELETED
+      ) {
+        setError("The email address or password is incorrect");
+      } else {
+        console.log(err.code);
+        alert(err.code);
+      }
+      });
   };
 
   return (

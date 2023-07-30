@@ -1,8 +1,9 @@
 // signup.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { auth } from '../firebaseConfig';
-import './signup-login.css'; // Import the custom CSS file
+import {auth, app} from '../firebaseConfig';
+import './signup-login.css';
+import { AuthErrorCodes, createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -11,6 +12,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState('');
+  
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -26,15 +28,25 @@ const Signup = () => {
       return;
     }
 
-    try {
-      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-      const user = userCredential.user;
-      console.log('User registered:', user);
-      // You can add further logic here, such as redirecting to a dashboard page.
-    } catch (error) {
-      setError(error.message);
-    }
+    // creating a new user
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        console.log(userCredential.user);
+        // ...
+      })
+      .catch((err) => {
+        if (err.code === AuthErrorCodes.WEAK_PASSWORD) {
+        setError("The password is too weak.");
+      } else if (err.code === AuthErrorCodes.EMAIL_EXISTS) {
+        setError("The email address is already in use.");
+      } else {
+        console.log(err.code);
+        alert(err.code);
+      }
+      });
   };
+
 
   return (
     <div className="wrapper">
