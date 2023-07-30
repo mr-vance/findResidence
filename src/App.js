@@ -1,22 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import './App.css';
 import Signup from './pages/signup';
 import Login from './pages/login';
 
 function App() {
-  const navigate = useNavigate();
-
-  const handleSignupClick = () => {
-    // Navigate to the signup page
-    navigate('/signup');
-  };
-
-  const handleLoginClick = () => {
-    // Navigate to the login page
-    navigate('/login');
-  };
-
   return (
     <Router>
       <div className="App">
@@ -24,19 +12,19 @@ function App() {
           <h1>Welcome to Our Accommodation Platform</h1>
           <p>Find your perfect accommodation with ease!</p>
           <div className="buttons-container">
-            <button className="round-button signup-button" onClick={handleSignupClick}>
-              Sign Up
-            </button>
-            <button className="round-button login-button" onClick={handleLoginClick}>
-              Login
-            </button>
+            <Link to="/signup">
+              <button className="round-button signup-button">Sign Up</button>
+            </Link>
+            <Link to="/login">
+              <button className="round-button login-button">Login</button>
+            </Link>
           </div>
         </header>
 
-        <Switch>
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
-        </Switch>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </div>
     </Router>
   );
