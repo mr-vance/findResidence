@@ -2,9 +2,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { auth, app } from '../firebaseConfig';
-import {  AuthErrorCodes, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import './signup-login.css'; 
-
+import { AuthErrorCodes, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import './signup-login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -22,20 +21,21 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        
-        console.log(userCredential.user);
-        // ...
+        const user = userCredential.user;
+        console.log(user);
+        alert("Login successful!"); // Show a simple alert when login is successful
+        // You can add further logic here, such as redirecting to a dashboard page.
       })
       .catch((err) => {
         if (
-        err.code === AuthErrorCodes.INVALID_PASSWORD ||
-        err.code === AuthErrorCodes.USER_DELETED
-      ) {
-        setError("The email address or password is incorrect");
-      } else {
-        console.log(err.code);
-        alert(err.code);
-      }
+          err.code === AuthErrorCodes.INVALID_PASSWORD ||
+          err.code === AuthErrorCodes.USER_DELETED
+        ) {
+          setError("The email address or password is incorrect");
+        } else {
+          console.log(err.code);
+          alert(err.code);
+        }
       });
   };
 
