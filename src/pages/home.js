@@ -1,18 +1,19 @@
-// Home.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { auth } from '../firebaseConfig';
+import { useNavigate } from 'react-router-dom';
 import './home.css';
 
-const Home = () => {
-  const [username, setUsername] = useState('John Doe'); // Replace with actual username after login
-  const [location, setLocation] = useState('');
-  const [budget, setBudget] = useState('');
-  const [residences, setResidences] = useState([]); // An array to store the fetched residences
+
+  const Home = () => {
+    const [email, setEmail] = useState('');
+    const [location, setLocation] = useState('');
+    const [budget, setBudget] = useState('');
+    const [residences, setResidences] = useState([]);
 
   // Function to handle the search button click and fetch the residences based on location and budget
   const handleSearch = () => {
-    // Replace the following lines with actual API calls or database queries to fetch residences
+
     const fetchedResidences = [
       { name: 'Residence 1', location: 'Location A', price: '$1000', availability: 'Available' },
       { name: 'Residence 2', location: 'Location B', price: '$1200', availability: 'Available' },
@@ -23,15 +24,30 @@ const Home = () => {
     setResidences(fetchedResidences);
   };
 
-  // Function to handle the logout
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      // Perform any additional logout logic, such as redirecting to the login page
-    } catch (error) {
-      console.log('Error during logout:', error);
-    }
-  };
+    useEffect(() => {
+      // Get the currently logged-in user
+      const currentUser = auth.currentUser;
+
+      if (currentUser) {
+        // Get the user's email from the currentUser object
+        setEmail(currentUser.email);
+      }
+    }, []);
+
+    const navigate = useNavigate(); // Initialize the navigate function
+
+    // Function to handle the logout
+    const handleLogout = async () => {
+      try {
+        await auth.signOut();
+        // Redirect the user to the login page after successful logout
+        navigate('/login'); // Use navigate function to redirect
+      } catch (error) {
+        console.log('Error during logout:', error);
+      }
+    };
+
+
 
   return (
     <div className="home-page">
@@ -39,7 +55,7 @@ const Home = () => {
       <nav>
         <div className="nav-container">
           <div className="username">
-            {username}
+            {email}
             <div className="logout-button" onClick={handleLogout}>
               Logout
             </div>
