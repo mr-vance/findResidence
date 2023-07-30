@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { auth, app } from '../firebaseConfig';
 import { AuthErrorCodes, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import './signup-login.css';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -25,6 +26,7 @@ const Login = () => {
         console.log(user);
         alert("Login successful!"); // Show a simple alert when login is successful
         // You can add further logic here, such as redirecting to a dashboard page.
+        history.push('/home');
       })
       .catch((err) => {
         if (
